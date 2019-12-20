@@ -1,8 +1,30 @@
 <template>
     <div id="app">
-        <Nav/>
+        <!--        <Login/>-->
+        <!--                <Home/>-->
+        <router-view/>
     </div>
 </template>
+
+
+<script>
+    import Nav from "./views/Nav";
+    import Login from "./views/Login";
+    import Home from "./views/Home";
+
+
+    export default {
+        components: {Home, Nav, Login},
+        data() {
+            return {}
+        },
+        mounted() {
+
+            console.log(this.$store.state.online);
+
+        }
+    }
+</script>
 
 <style lang="scss">
     #app {
@@ -26,10 +48,3 @@
         }
     }
 </style>
-<script>
-    import Nav from "./views/Nav";
-
-    export default {
-        components: {Nav}
-    }
-</script>
