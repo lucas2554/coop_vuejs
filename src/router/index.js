@@ -14,23 +14,51 @@ const routes = [
         path: '/',
         name: 'home',
         component: Home,
+        beforeEnter(to, from, next) {
+            if (store.state.token === "") {
+                router.push('/login')
+            } else {
+                next()
+            }
+        }
 
     },
     {
         path: '/about',
         name: 'about',
         component: About,
-     
+        beforeEnter(to, from, next) {
+            if (store.state.token === "") {
+                router.push('/login')
+            } else {
+                next()
+            }
+        }
     },
     {
         path: '/login',
         name: 'login',
-        component: Login
+        component: Login,
+        beforeEnter(to, from, next) {
+            if (store.state.token !== "") {
+                router.push('/')
+            } else {
+                next()
+            }
+        }
     },
     {
         path: '/signin',
         name: 'signIn',
-        component: Signin
+        component: Signin,
+        beforeEnter(to, from, next) {
+            if (store.state.token !== "") {
+
+                router.push('/')
+            } else {
+                next()
+            }
+        }
     },
 
 ]

@@ -1,5 +1,13 @@
 <template>
     <div class="connexion">
+
+        <div class="field">
+            <label class="label">Name</label>
+            <div class="control">
+                <input class="input" type="text" placeholder="Text input">
+            </div>
+        </div>
+
         <form class="login">
             <h1>Login</h1>
             <label>User name</label>
@@ -9,6 +17,9 @@
             <hr/>
             <button type="submit" @click="login">Login</button>
         </form>
+        <p>Pas encore de compte ?
+            <router-link to="signin"> créez le maintenant !</router-link>
+        </p>
     </div>
 
 </template>

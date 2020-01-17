@@ -16,7 +16,9 @@
             return {}
         },
         mounted() {
-            this.$router.push('login')
+
+
+            alert(this.$store.state.token)
 
         }
     }
