@@ -15,11 +15,8 @@
             HelloWorld
         },
         mounted() {
-            console.log(this.$store.state.online);
+            console.log('home ' + this.$store.state.online);
 
-            if (this.$store.state.online == false) {
-                this.$router.push('login')
-            }
         }
     }
 </script>

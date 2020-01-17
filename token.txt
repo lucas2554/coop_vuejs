@@ -1,1 +1,20 @@
-token : 72d6093db8c4cfc6575e880307327c9c7af4d291
+token : "3efb2f0b381dba517e4eb116e9d80f045a473798"
+
+
+ if (this.log.email && this.log.password) {
+                    let parametre = {
+                        email: this.log.email,
+                        password: this.log.password
+                    };
+                    axios.post('members/signin', parametre).then((response) => {
+                        // console.table(response.data);
+                        console.log(response.data);
+                        if (response.status === 200) {
+                            let token = response.data;
+                            this.$store.commit('connected', token);
+                            this.$router.push('/');
+                        } else {
+
+                        }
+                    })
+                }

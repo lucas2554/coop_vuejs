@@ -8,18 +8,18 @@ const vp = new VuexPersist({
 });
 
 Vue.use(Vuex);
+Vue.prototype.$bus = new Vue();
+
 export default new Vuex.Store({
     plugins: [vp.plugin],
     state: {
-        online: false,
-        account: "",
+        token: "",
     },
     mutations: {
-        connected(state, user) {
-            state.online = true;
-            state.account = user;
-            console.log(user)
-        }
+        connected(state, token) {
+            state.token = token;
+        },
+
     }
     ,
     actions: {}

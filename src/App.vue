@@ -1,8 +1,6 @@
 <template>
     <div id="app">
-        <!--        <Login/>-->
-        <!--                <Home/>-->
-        <router-view/>
+        <Nav/>
     </div>
 </template>
 
@@ -12,15 +10,13 @@
     import Login from "./views/Login";
     import Home from "./views/Home";
 
-
     export default {
         components: {Home, Nav, Login},
         data() {
             return {}
         },
         mounted() {
-
-            console.log(this.$store.state.online);
+            this.$router.push('login')
 
         }
     }

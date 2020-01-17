@@ -1,13 +1,14 @@
 <template>
     <div class="connexion">
         <form class="login">
-            <h1>Login</h1>
-            <label>User name</label>
+            <h1>Sign in</h1>
+            <label>Email</label>
             <input required v-model="log.email" type="text" placeholder="Mail"/>
+            <label>Name</label>
+            <input required v-model="log.name" type="text" placeholder="Nom complet"/>
             <label>Password</label>
             <input required v-model="log.password" type="password" placeholder="Mot de passe"/>
-            <hr/>
-            <button type="submit" @click="login">Login</button>
+            <button type="submit" @click="signin">Sign In</button>
         </form>
     </div>
 
@@ -24,6 +25,7 @@
                 log: {
                     email: "",
                     password: "",
+                    name: ""
                 },
 
             }
@@ -37,23 +39,35 @@
 
             },
 
-            login() {
-
+            signin() {
 
                 if (this.log.email && this.log.password) {
                     let parametre = {
+                        fullname: this.log.name,
                         email: this.log.email,
                         password: this.log.password
                     };
-                    axios.post('members/signin', parametre).then((response) => {
-                        // console.table(response.data);
-                        console.log("tok :" + response.data.token);
+                    axios.post('members', parametre).then((response) => {
                         if (response.status === 200) {
-                            let token = response.data.token;
-                            this.$store.commit('connected', token);
-                            this.$router.push('/');
-                        } else {
+                            console.log(response.data.id);
+                            let parametreConnexion = {
+                                email: response.data.email,
+                                password: response.data.password
+                            }
+                            axios.post('members/signin', parametreConnexion).then((response) => {
+                                // console.table(response.data);
+                                console.log(response.data);
+                                if (response.status === 200) {
+                                    let token = response.data.token;
+                                    this.$store.commit('connected', token);
+                                    this.$router.push('/');
+                                } else {
+                                    alert('ça marche pas | login fail')
+                                }
+                            })
 
+                        } else {
+                            alert('ça marche pas| signin fail')
                         }
                     })
                 }
@@ -73,10 +87,6 @@
 
         },
         mounted() {
-
-            if (this.$store.state.token !== "") {
-                this.$router.push('/')
-            }
 
 
             // axios.get('members').then((response) => {
