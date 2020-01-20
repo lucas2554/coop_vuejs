@@ -55,11 +55,11 @@
                                 password: response.data.password
                             }
                             axios.post('members/signin', parametreConnexion).then((response) => {
-                                // console.table(response.data);
                                 console.log(response.data);
                                 if (response.status === 200) {
+                                    let email = response.data.member.email;
                                     let token = response.data.token;
-                                    this.$store.commit('connected', token);
+                                    this.$store.commit('connected', token, email);
                                     this.$router.push('/');
                                 } else {
                                     alert('ça marche pas | login fail')

@@ -2,7 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Login from "../views/Login";
-import About from "../views/About"
+import Membres from "../views/Membres"
 import Signin from "../views/Signin"
 
 import store from "../store/index"
@@ -24,9 +24,9 @@ const routes = [
 
     },
     {
-        path: '/about',
-        name: 'about',
-        component: About,
+        path: '/membres',
+        name: 'membres',
+        component: Membres,
         beforeEnter(to, from, next) {
             if (store.state.token === "") {
                 router.push('/login')

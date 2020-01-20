@@ -4,7 +4,7 @@
         |
         <router-link to="/conversation">Conversation</router-link>
         |
-        <router-link to="/about">Membre</router-link>
+        <router-link to="/membres">Membres</router-link>
         |
         <router-link to="/about">User (récup nom utilisateur courant)</router-link>
         |

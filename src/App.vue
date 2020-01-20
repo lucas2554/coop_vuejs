@@ -17,8 +17,9 @@
         },
         mounted() {
 
-
-            alert(this.$store.state.token)
+            axios.get('members').then((response) => {
+                  this.$store.commit('setMembres',response.data);
+             });
 
         }
     }

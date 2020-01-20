@@ -57,11 +57,11 @@
                         password: this.log.password
                     };
                     axios.post('members/signin', parametre).then((response) => {
-                        // console.table(response.data);
                         console.log("tok :" + response.data.token);
                         if (response.status === 200) {
                             let token = response.data.token;
-                            this.$store.commit('connected', token);
+                            let email = response.data.email;
+                            this.$store.commit('connected', token, email);
                             this.$router.push('/');
                         } else {
 

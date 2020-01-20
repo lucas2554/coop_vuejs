@@ -13,11 +13,18 @@ Vue.prototype.$bus = new Vue();
 export default new Vuex.Store({
     plugins: [vp.plugin],
     state: {
+        email: "",
         token: "",
+        membres: []
     },
     mutations: {
-        connected(state, token) {
+        setMembres(state, membres) {
+            state.membres = membres;
+        },
+        connected(state, token, email) {
             state.token = token;
+            state.email = email;
+
         },
 
     }
