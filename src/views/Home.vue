@@ -15,7 +15,7 @@
             HelloWorld
         },
         mounted() {
-            console.log('home ' + this.$store.state.online);
+            // console.log('home ' + this.$store.state.online);
 
         }
     }

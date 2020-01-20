@@ -1,16 +1,33 @@
 <template>
-    <div class="nav">
-        <router-link to="/">Co'op</router-link>
-        |
-        <router-link to="/conversation">Conversation</router-link>
-        |
-        <router-link to="/about">Membre</router-link>
-        |
-        <router-link to="/about">User (récup nom utilisateur courant)</router-link>
-        |
-        <button @click="disconnect">Déconnexion</button>
-        <router-view/>
-    </div>
+
+
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+
+        </div>
+
+        <div id="navbarBasicExample" class="navbar-menu">
+            <div class="navbar-start">
+                <router-link class="navbar-item" to="/">Co'op</router-link>
+                <router-link class="navbar-item" to="/conversations">Conversation</router-link>
+                <router-link class="navbar-item" to="/membres">Membres</router-link>
+
+            </div>
+
+            <div class="navbar-end">
+                <div class="navbar-item">
+                    <div class="buttons">
+                        <a @click="disconnect" class="button is-primary">
+                            <strong>Déconnexion</strong>
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+
 </template>
 
 <script>
@@ -27,13 +44,14 @@
                 }
                 console.log(parametre)
 
-                axios.delete('members/signout?token=' + this.$store.state.token).then((response) => {
-                    console.log(response.status)
-                    alert('déconnecté');
-                    this.$store.commit('connected', '')
-                    this.$router.push('/login')
+                axios.delete('members/signout').then((response) => {
+                        console.log(response.status)
+                        alert('déconnecté');
+                        this.$store.commit('connected', '')
+                        this.$router.push('/login')
 
-                })
+                    }
+                )
 
             }
         }

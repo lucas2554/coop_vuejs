@@ -20,5 +20,15 @@ new Vue({
     store,
     render: function (h) {
         return h(App)
+    },
+    beforeCreate() {
+        window.axios.interceptors.request.use((config) => {
+            if (this.$store.state.token) {
+                config.url += '?token=' + this.$store.state.token;
+            }
+            return config
+        }, error => {
+            return console.log(error)
+        })
     }
 }).$mount('#app');

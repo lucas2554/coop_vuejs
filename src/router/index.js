@@ -2,8 +2,9 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Login from "../views/Login";
-import About from "../views/About"
+import About from "../views/Membres"
 import Signin from "../views/Signin"
+import Conversations from "../views/Conversations"
 
 import store from "../store/index"
 
@@ -24,8 +25,8 @@ const routes = [
 
     },
     {
-        path: '/about',
-        name: 'about',
+        path: '/membres',
+        name: 'membres',
         component: About,
         beforeEnter(to, from, next) {
             if (store.state.token === "") {
@@ -55,6 +56,30 @@ const routes = [
             if (store.state.token !== "") {
 
                 router.push('/')
+            } else {
+                next()
+            }
+        }
+    },
+    {
+        path: '/conversations',
+        name: 'conversations',
+        component: Conversations,
+        beforeEnter(to, from, next) {
+            if (store.state.token === "") {
+                router.push('/login')
+            } else {
+                next()
+            }
+        }
+    },
+    {
+        path: '/conversations/:id',
+        name: 'conversation',
+        component: Conversations,
+        beforeEnter(to, from, next) {
+            if (store.state.token === "") {
+                router.push('/login')
             } else {
                 next()
             }

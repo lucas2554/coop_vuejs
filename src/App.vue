@@ -1,6 +1,7 @@
 <template>
     <div id="app">
-        <Nav/>
+        <Nav v-if="this.$store.state.token !==''"/>
+        <router-view/>
     </div>
 </template>
 
@@ -13,14 +14,14 @@
     export default {
         components: {Home, Nav, Login},
         data() {
-            return {}
+            return {
+                token: ''
+            }
         },
         mounted() {
 
+        },
 
-            alert(this.$store.state.token)
-
-        }
     }
 </script>
 

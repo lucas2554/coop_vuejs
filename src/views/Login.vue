@@ -1,12 +1,12 @@
 <template>
     <div class="connexion">
 
-        <div class="field">
-            <label class="label">Name</label>
-            <div class="control">
-                <input class="input" type="text" placeholder="Text input">
-            </div>
-        </div>
+<!--        <div class="field">-->
+<!--            <label class="label">Name</label>-->
+<!--            <div class="control">-->
+<!--                <input class="input" type="text" placeholder="Text input">-->
+<!--            </div>-->
+<!--        </div>-->
 
         <form class="login">
             <h1>Login</h1>

@@ -14,11 +14,15 @@ export default new Vuex.Store({
     plugins: [vp.plugin],
     state: {
         token: "",
+        conversation_id: ''
     },
     mutations: {
         connected(state, token) {
             state.token = token;
         },
+        getConvId(state, id) {
+            state.conversation_id = id
+        }
 
     }
     ,
