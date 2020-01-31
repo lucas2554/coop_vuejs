@@ -14,7 +14,10 @@ export default new Vuex.Store({
     plugins: [vp.plugin],
     state: {
         token: "",
-        conversation_id: ''
+        member_id: "",
+        member_name: "",
+        conversation_id: '',
+        liste_membre: []
     },
     mutations: {
         connected(state, token) {
@@ -22,7 +25,20 @@ export default new Vuex.Store({
         },
         getConvId(state, id) {
             state.conversation_id = id
+        },
+        getMemberID(state, member_id) {
+            state.member_id = member_id
+
+        },
+        getMemberName(state, name) {
+            state.member_name = name
+
+        },
+
+        getListeMembre(state, tab){
+            state.liste_membre = tab
         }
+
 
     }
     ,

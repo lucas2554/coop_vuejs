@@ -1,12 +1,12 @@
 <template>
     <div class="connexion">
 
-<!--        <div class="field">-->
-<!--            <label class="label">Name</label>-->
-<!--            <div class="control">-->
-<!--                <input class="input" type="text" placeholder="Text input">-->
-<!--            </div>-->
-<!--        </div>-->
+        <!--        <div class="field">-->
+        <!--            <label class="label">Name</label>-->
+        <!--            <div class="control">-->
+        <!--                <input class="input" type="text" placeholder="Text input">-->
+        <!--            </div>-->
+        <!--        </div>-->
 
         <form class="login">
             <h1>Login</h1>
@@ -57,11 +57,14 @@
                         password: this.log.password
                     };
                     axios.post('members/signin', parametre).then((response) => {
-                        // console.table(response.data);
-                        console.log("tok :" + response.data.token);
+                        console.table(response.data);
+                        // console.log("tok :" + response.data.token);
                         if (response.status === 200) {
                             let token = response.data.token;
+                            let member_id = response.data.member
                             this.$store.commit('connected', token);
+                            this.$store.commit('getMemberID', member_id.id);
+                            this.$store.commit('getMemberName', member_id.fullname);
                             this.$router.push('/');
                         } else {
 

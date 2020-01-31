@@ -5,6 +5,10 @@ import store from './store'
 import axios from 'axios'
 import "bulma/css/bulma.css"
 
+import {outils} from './utils/utils'
+
+Vue.mixin(outils)
+
 Vue.config.productionTip = false;
 
 window.axios = axios.create({

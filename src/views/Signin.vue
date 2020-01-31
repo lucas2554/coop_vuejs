@@ -59,7 +59,11 @@
                                 console.log(response.data);
                                 if (response.status === 200) {
                                     let token = response.data.token;
+                                    let member_id = response.data.member
                                     this.$store.commit('connected', token);
+                                    this.$store.commit('getMemberID', member_id.id);
+                                    this.$store.commit('getMemberName', member_id.fullname);
+
                                     this.$router.push('/');
                                 } else {
                                     alert('ça marche pas | login fail')
