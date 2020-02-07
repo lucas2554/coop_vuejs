@@ -91,14 +91,6 @@
             },
 
 
-            storeMembre() {
-
-                axios.get('members').then((response) => {
-                    console.table(response.data);
-                    this.$store.commit('getListeMembre', response.data)
-                })
-
-            },
 
 
         },
@@ -106,7 +98,6 @@
 
         mounted() {
 
-            this.storeMembre()
 
 
             // alert(this.$route.params.id)
