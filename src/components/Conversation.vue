@@ -1,18 +1,8 @@
 <template>
-    <div class="conversation">
+    <div class="conversation column">
         <div class="message_conversation">
-            <div class="scroll">
-                <article class="message" v-for="item in conv">
-                    <div class="message-header">
-                        <p>{{getMembre(item.member_id)}}</p>
-                        <p>{{item.created_at}}</p>
-                        <button @click="deleteMessage(item.id)" class="delete" aria-label="delete"></button>
-                        <i class="fas fa-pen"></i>
-                    </div>
-                    <div class="message-body">
-                        {{item.message}}
-                    </div>
-                </article>
+            <div class="scroll" v-for="item in conv">
+                <Message :item="item"/>
             </div>
         </div>
 
@@ -22,13 +12,18 @@
             <button @click="postMessage">valider</button>
         </form>
 
-
     </div>
+
 </template>
 
 <script>
+
+    import Message from './Message'
+    import Members from "../views/Membres";
+
     export default {
         name: 'Conversation',
+        components: {Message, Members},
         props: {
             msg: String
         },
@@ -38,14 +33,17 @@
                 conv: {},
                 message: '',
                 memberName: '',
-                test: []
+                member_id_stored: this.$store.state.member_id,
+                test: [],
+                activated: false
             }
         },
         watch: {
             $route() {
                 this.channel_id = this.$route.params.id
                 this.chargerChannel()
-            }
+            },
+
 
         },
         methods: {
@@ -57,10 +55,9 @@
                 }
                 axios.get('channels/' + this.$route.params.id + "/posts").then((response) => {
                     // console.log(response.status)
+                    Array.prototype.reverse.call(this.conv)
                     this.conv = response.data
                     console.table(this.conv)
-
-
                 })
             },
 
@@ -81,23 +78,38 @@
 
             deleteMessage(id) {
 
-                axios.delete('channels/' + this.channel_id + "/posts/" + id).then((response) => {
-
-                    // console.log(response.status)
-                    this.chargerChannel()
-
-                })
+                confirm('Attention vous allez supprimer un message.')
+                if (window.confirm) {
+                    axios.delete('channels/' + this.channel_id + "/posts/" + id).then((response) => {
+                        // console.log(response.status)
+                        this.chargerChannel()
+                    })
+                }
 
             },
 
 
+            activerEditMessage() {
+                this.activated = true;
+            },
+
+            anulerEditMessage() {
+                this.activated = false;
+            },
+
+
+            editMessage(newMessage) {
+
+            }
 
 
         },
 
 
         mounted() {
-
+            this.$bus.$on('charger-channel', ()=>{
+                this.chargerChannel()
+            })
 
 
             // alert(this.$route.params.id)
@@ -109,6 +121,9 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
+
+.convesation{
+    height: 80vh;
     h3 {
         margin: 40px 0 0;
     }
@@ -128,11 +143,8 @@
     }
 
     .message_conversation {
-        height: 50vh;
-        width: 50%;
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
+       
+      
         overflow: auto;
         border: #42b983 2px solid;
 
@@ -164,4 +176,9 @@
         position: absolute;
         bottom: 0;
     }
+
+    .fa-pen {
+        cursor: pointer;
+    }
+}
 </style>

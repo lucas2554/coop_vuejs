@@ -1,15 +1,30 @@
 <template>
     <div class="connexion">
-        <form class="login">
-            <h1>Sign in</h1>
-            <label>Email</label>
-            <input required v-model="log.email" type="text" placeholder="Mail"/>
-            <label>Name</label>
-            <input required v-model="log.name" type="text" placeholder="Nom complet"/>
-            <label>Password</label>
-            <input required v-model="log.password" type="password" placeholder="Mot de passe"/>
-            <button type="submit" @click="signin">Sign In</button>
+        <h1 class="title is-1">Créez un compte !</h1>
+
+        <form class="signin">
+            <div class="field">
+                <div class="control">
+                    <input v-model="log.email" class="input is-primary" type="text" placeholder="Mail">
+                </div>
+                <div class="control">
+                    <input v-model="log.name" class="input is-primary" type="text" placeholder="Nom complet">
+                </div>
+
+                <div class="control">
+                    <input v-model="log.password" class="input is-primary" type="text" placeholder="Mot de passe">
+                </div>
+            </div>
+        
+            <button @click="signin" class="button is-primary">Sign in</button>
+
         </form>
+            <p class="is-medium is-4 ">retour à la         
+                <router-link to="login">
+                    page de connexion        
+                </router-link>
+            </p>
+
     </div>
 
 </template>
@@ -104,3 +119,25 @@
 
     }
 </script>
+
+<style lang="scss">
+
+    .signin{
+        width: 50%;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .subtitle{
+        padding: 50px 0
+    }
+
+.is-medium{
+    margin: 50px 0;
+}
+
+
+   
+
+</style>

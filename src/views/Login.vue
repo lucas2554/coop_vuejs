@@ -8,18 +8,24 @@
         <!--            </div>-->
         <!--        </div>-->
 
+        <h1 class="title is-1">Connectez-vous !</h1>
         <form class="login">
-            <h1>Login</h1>
-            <label>User name</label>
-            <input required v-model="log.email" type="text" placeholder="Mail"/>
-            <label>Password</label>
-            <input required v-model="log.password" type="password" placeholder="Mot de passe"/>
-            <hr/>
-            <button type="submit" @click="login">Login</button>
+            
+            <div class="field">
+                <div class="control">
+                    <input v-model="log.email" class="input is-primary" type="text" placeholder="Mail">
+                </div>
+        
+                <div class="control">
+                    <input type="password" v-model="log.password" class="input is-primary"  placeholder="password">
+                </div>
+            </div>
+            <button @click="login" class="button is-primary">Login</button>
         </form>
-        <p>Pas encore de compte ?
+        <p class="is-medium">Pas encore de compte ?
             <router-link to="signin"> créez le maintenant !</router-link>
         </p>
+        
     </div>
 
 </template>
@@ -67,6 +73,8 @@
                             this.$store.commit('getMemberName', member_id.fullname);
                             this.$router.push('/');
                         } else {
+                            
+                            console.log('erreur')
 
                         }
                     })
@@ -104,3 +112,16 @@
 
     }
 </script>
+<style lang="scss">
+    .login{
+        width: 50%;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .button{
+        padding: 50px 0
+    }
+
+</style>

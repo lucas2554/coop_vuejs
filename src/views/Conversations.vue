@@ -1,33 +1,14 @@
 <template>
-    <div class="home">
+    <div class="conversation">
         <h1>Vue conversation</h1>
-
-        <nav class="panel">
+<div class=columns>
+        
+        <div class="column is-one-quarter">
+        <nav class="panel ">
             <p class="panel-heading">
                 Channel
                 <i @click="openModal('open')" class="fas fa-plus-circle"></i>
             </p>
-            <div class="modal">
-                <div class="modal-background"></div>
-                <div class="modal-content">
-
-                    <div class="card">
-                        <div class="card-content">
-
-                            <p class="title is-4">veuillez renseigner les champs suivant : </p>
-                            <div class="content">
-                                <input class="input" type="text" placeholder="label" v-model="label">
-
-                                <textarea class="textarea" placeholder="topic" v-model="topic"></textarea>
-                                <button @click="createChannel" class="button is-dark">Valider</button>
-
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-                <button @click="openModal('close')" class="modal-close is-large" aria-label="close"></button>
-            </div>
 
             <p v-for="conv in this.listeConversation" class="panel-block is-active">
                 <router-link :to="{name:'conversation', params:{id:conv.id}}">{{conv.label}}</router-link>
@@ -36,8 +17,32 @@
 
             </p>
         </nav>
+        </div>
+        <div class="modal">
+            <div class="modal-background"></div>
+            <div class="modal-content">
+
+                <div class="card">
+                    <div class="card-content">
+
+                        <p class="title is-4">veuillez renseigner les champs suivant : </p>
+                        <div class="content">
+                            <input class="input" type="text" placeholder="label" v-model="label">
+
+                            <textarea class="textarea" placeholder="topic" v-model="topic"></textarea>
+                            <button @click="createChannel" class="button is-dark">Valider</button>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <button @click="openModal('close')" class="modal-close is-large" aria-label="close"></button>
+        </div>
+
 
         <Conversation/>
+        </div>
 
     </div>
 </template>
@@ -104,10 +109,16 @@
             },
 
             deleteChannel(id) {
-                axios.delete('channels/' + id).then((response) => {
-                    this.loadListChannel()
 
-                })
+                confirm('Attention vous allez supprimer une conversation.')
+                if (window.confirm()) {
+                    axios.delete('channels/' + id).then((response) => {
+                        this.loadListChannel()
+
+                    })
+                }
+
+
             }
 
 
@@ -137,5 +148,6 @@
 
     .fas.fa-trash {
         padding-left: 20px;
+        cursor: pointer;
     }
 </style>

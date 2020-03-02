@@ -19,6 +19,8 @@ window.axios = axios.create({
     headers: {Authorization: '72d6093db8c4cfc6575e880307327c9c7af4d291'}
 });
 
+Vue.prototype.$bus = new Vue();
+
 new Vue({
     router,
     store,
