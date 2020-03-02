@@ -1,23 +1,19 @@
 <template>
     <div class="connexion">
 
-        <!--        <div class="field">-->
-        <!--            <label class="label">Name</label>-->
-        <!--            <div class="control">-->
-        <!--                <input class="input" type="text" placeholder="Text input">-->
-        <!--            </div>-->
-        <!--        </div>-->
 
         <h1 class="title is-1">Connectez-vous !</h1>
         <form class="login">
-            
+
             <div class="field">
                 <div class="control">
-                    <input v-model="log.email" class="input is-primary" type="text" placeholder="Mail">
+                    <input v-model="log.email" class="input" v-bind:class="{'is-primary': isMailVerified}" type="text"
+                           placeholder="Mail"
+                           v-on="checkUserMail(log.email)">
                 </div>
-        
+
                 <div class="control">
-                    <input type="password" v-model="log.password" class="input is-primary"  placeholder="password">
+                    <input type="password" v-model="log.password" class="input is-primary" placeholder="password">
                 </div>
             </div>
             <button @click="login" class="button is-primary">Login</button>
@@ -25,7 +21,7 @@
         <p class="is-medium">Pas encore de compte ?
             <router-link to="signin"> créez le maintenant !</router-link>
         </p>
-        
+
     </div>
 
 </template>
@@ -43,16 +39,33 @@
                     password: "",
                 },
 
+                isMailVerified: false,
+                verifiedPsw: false
+
             }
         },
         methods: {
-            checkPassword() {
 
+            checkUserMail(userMail) {
+                if (userMail) {
+                    // console.log(userMail)
+                    let listeMembres = this.$store.state.liste_membre
+                    let checked = false
+                    for (let i = 0; i < listeMembres.length; i++) {
+                        if (userMail.trim() === listeMembres[i].email) {
+                            console.log('---------ok--------' + i)
+                            this.isMailVerified === true
+                            return this.isMailVerified
 
+                        } else {
+
+                        }
+                    }
+                    console.log(this.isMailVerified)
+
+                }
             },
-            checkEmail() {
 
-            },
 
             login() {
 
@@ -73,7 +86,7 @@
                             this.$store.commit('getMemberName', member_id.fullname);
                             this.$router.push('/');
                         } else {
-                            
+
                             console.log('erreur')
 
                         }
@@ -100,27 +113,22 @@
                 this.$router.push('/')
             }
 
+            // console.table(this.$store.state.liste_membre)
 
-            // axios.get('members').then((response) => {
-            //     console.table(response.data);
-            //     console.log(response)
-            // })
-
-
-        }
+        },
 
 
     }
 </script>
 <style lang="scss">
-    .login{
+    .login {
         width: 50%;
         display: block;
         margin-left: auto;
         margin-right: auto;
     }
 
-    .button{
+    .button {
         padding: 50px 0
     }
 

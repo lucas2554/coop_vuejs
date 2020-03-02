@@ -19,6 +19,7 @@
         mounted() {
             // console.log('home ' + this.$store.state.online);
 
+
         }
     }
 </script>
