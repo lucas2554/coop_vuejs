@@ -4,19 +4,35 @@
 
         <h1 class="title is-1">Connectez-vous !</h1>
         <form class="login">
-
-            <div class="field">
-                <div class="control">
-                    <input v-model="log.email" class="input" v-bind:class="{'is-primary': isMailVerified}" type="text"
+            <div class="field ">
+                <p class="control has-icons-right">
+                    <input v-model="log.email" class="input"
+                           v-bind:class="{'is-primary': isMailVerified}" type="text"
                            placeholder="Mail"
-                           v-on="checkUserMail(log.email)">
-                </div>
+                           v-on="checkMail()">
+                    <span v-if="isMailVerified===true" class="icon is-small is-right">
+                        <i class="fas fa-check"></i>
+                    </span>
+                </p>
 
-                <div class="control">
-                    <input type="password" v-model="log.password" class="input is-primary" placeholder="password">
-                </div>
+                <p class="control has-icons-right">
+                    <input v-model="log.password" class="input"
+                           v-bind:class="{'is-primary': isPswVerified}" type="password"
+                           placeholder="Mot de passe"
+                           v-on="checkPsw()">
+                    <span v-if="isPswVerified===true" class="icon is-small is-right">
+                        <i class="fas fa-check"></i>
+                    </span>
+
+                </p>
+
+
             </div>
-            <button @click="login" class="button is-primary">Login</button>
+
+            <button v-if="isPswVerified === true && isMailVerified === true" @click="login"
+                    class="button is-primary is-rounded">Connexion
+            </button>
+            <p v-else class="is-medium is-4">Remplissez les différents champs afin de vous connecter</p>
         </form>
         <p class="is-medium">Pas encore de compte ?
             <router-link to="signin"> créez le maintenant !</router-link>
@@ -40,35 +56,27 @@
                 },
 
                 isMailVerified: false,
-                verifiedPsw: false
+                isPswVerified: false
 
             }
         },
         methods: {
 
-            checkUserMail(userMail) {
-                if (userMail) {
-                    // console.log(userMail)
-                    let listeMembres = this.$store.state.liste_membre
-                    let checked = false
-                    for (let i = 0; i < listeMembres.length; i++) {
-                        if (userMail.trim() === listeMembres[i].email) {
-                            console.log('---------ok--------' + i)
-                            this.isMailVerified === true
-                            return this.isMailVerified
+            checkMail() {
 
-                        } else {
+                this.isMailVerified = this.log.email === this.checkUserMail(this.log.email);
 
-                        }
-                    }
-                    console.log(this.isMailVerified)
+            },
 
+            checkPsw() {
+
+                if (this.isMailVerified === true) {
+                    this.isPswVerified = this.log.password === this.checkUserPsw(this.log.password);
                 }
             },
 
 
             login() {
-
 
                 if (this.log.email && this.log.password) {
                     let parametre = {
@@ -130,6 +138,10 @@
 
     .button {
         padding: 50px 0
+    }
+
+    input {
+        outline: none;
     }
 
 </style>

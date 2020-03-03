@@ -12,18 +12,28 @@
                 </div>
 
                 <div class="control">
-                    <input v-model="log.password" class="input is-primary" type="text" placeholder="Mot de passe">
+                    <input v-model="log.password" class="input is-primary" type="password" placeholder="Mot de passe">
+                </div>
+
+                <div class="control has-icons-right">
+                    <input v-model="log.secondPassword" class="input is-primary" type="password"
+                           placeholder="Vérifiez votre mot de passe" v-on="checkPswd()">
+                    <span v-if="isPswVerifiedTwice === true" class="icon is-small is-right">
+                        <i class="fas fa-check"></i>
+                    </span>
                 </div>
             </div>
-        
-            <button @click="signin" class="button is-primary">Sign in</button>
+
+            <button v-if="isPswVerifiedTwice === true" @click="signin" class="button is-primary">Valider</button>
+            <p v-else class="is-medium is-4">Remplissez le champs afin de créer votre
+                compte.</p>
 
         </form>
-            <p class="is-medium is-4 ">retour à la         
-                <router-link to="login">
-                    page de connexion        
-                </router-link>
-            </p>
+        <p class="is-medium is-4 ">retour à la
+            <router-link to="login">
+                page de connexion
+            </router-link>
+        </p>
 
     </div>
 
@@ -40,20 +50,20 @@
                 log: {
                     email: "",
                     password: "",
-                    name: ""
+                    name: "",
+                    secondPassword: ""
                 },
+                isPswVerifiedTwice: false
 
             }
         },
         methods: {
-            checkPassword() {
 
+            checkPswd() {
+
+                this.isPswVerifiedTwice = !!(this.log.password === this.log.secondPassword && this.log.email && this.log.name && this.log.password);
 
             },
-            checkEmail() {
-
-            },
-
             signin() {
 
                 if (this.log.email && this.log.password) {
@@ -107,7 +117,6 @@
         },
         mounted() {
 
-
             // axios.get('members').then((response) => {
             //     console.table(response.data);
             //     console.log(response)
@@ -122,22 +131,20 @@
 
 <style lang="scss">
 
-    .signin{
+    .signin {
         width: 50%;
         display: block;
         margin-left: auto;
         margin-right: auto;
     }
 
-    .subtitle{
+    .subtitle {
         padding: 50px 0
     }
 
-.is-medium{
-    margin: 50px 0;
-}
+    .is-medium {
+        margin: 50px 0;
+    }
 
-
-   
 
 </style>
