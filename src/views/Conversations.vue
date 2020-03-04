@@ -145,7 +145,7 @@
                 let parametre = {
                     token: this.token
                 }
-                axios.get('channels', parametre).then((response) => {
+                axios.get('channels').then((response) => {
                     // console.table(response.data)
                     this.listeConversation = response.data
                 })

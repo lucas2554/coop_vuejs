@@ -20,7 +20,6 @@
         },
         mounted() {
             axios.get('members').then((response) => {
-                console.table(response.data);
                 this.$store.commit('getListeMembre', response.data)
             })
         },
