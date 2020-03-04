@@ -1,9 +1,5 @@
 <template>
     <div class="detail">
-         <button
-              type="button"
-              @click="close"
-            >X</button>
             <div class="infos">
                 <p>nom : {{membre.fullname}}</p>
                 <p>e-mail : {{membre.email}}</p>
@@ -14,46 +10,78 @@
 <script>
     export default {
         name: 'Membre',
-
         props: ['membre'],
 
-           methods: {
-                close() {
-                    this.$emit('close');
+          data() {
+            return {
+             idConversations:[],
+            messages:[]
+            }
+        },
+
+        computed:{
+            check(){
+                return this.$store.state.refresh
+            }
+        },
+
+        watch: {
+            check: function () {
+                if(this.$store.state.refresh == true){
+                    this.messages.forEach(element => {    
+                          if (element.member_id == this.membre.id) {
+                              console.log("ok")
+                          }
+                    this.$store.commit("refreshFalse")
+                    })
                 }
-         }
+            }
+        },
+
+        methods: {
+        
+            loadConversations(){
+                axios.get('channels').then((response) => {
+                    response.data.forEach(element => this.idConversations.push(element.id));
+                    this.loadMessages();
+                })
+            },
+
+            loadMessages(){
+                this.idConversations.forEach(element => 
+                    axios.get('channels/' + element + '/posts').then((response) => {
+                        response.data.forEach(element =>     
+                          this.messages.push(element)
+                        )
+                    })
+                );
+
+            }
+
+            // loadMessages(){
+            //     this.idConversations.forEach(element => 
+            //         axios.get('channels/' + element + '/posts').then((response) => {
+            //             response.data.forEach(element => {    
+            //                 console.log(this.membre.fullname);  
+            //               if (element.id == this.membre.id) {
+            //                   console.log("ok")
+            //               }
+            //             }
+            //             )
+            //         })
+            //     );
+
+            // }
+        },
+
+        mounted() {
+            console.log("entrer")
+            this.loadConversations()
+        }
     }
 </script>
 
 <style scoped lang="scss">
 
-
-
-    .detail{
-        background-color: lightgrey;
-        padding: 30px;
-        // display: grid;
-        // grid-template-columns: repeat(8, 1fr);
-        margin: auto;
-        display: block;
-        width: 20%;
-        top: 50%;
-        transform: translateY(-50%);
-    }
-
-    // .infos{
-    //     grid-column: 1 / 8;
-    //     grid-row: 2;
-    //     padding-top: 20px;
-    // }
-
-    // button{
-    //     grid-column: 7 / 8;
-    //     grid-row: 1;
-    // }
-
-    button{
-        float: right;
-    }
    
 </style>

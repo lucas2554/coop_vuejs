@@ -1,18 +1,33 @@
 <template>
     <div class="membres">
         <h1>Membres</h1>
-        <div>
-            <ul>
-                <li v-for="membre in $store.state.liste_membre">
-                    {{membre.fullname}} {{membre.email}}{{membre.id}}
-                    <button @click="delete_member(membre.id)">Supprimer</button>
-                    <button @click="showModal(membre)">voir</button>
-                </li>
-            </ul>
+        <div class="columns">
+            <div class="column">
+                <ul>
+                    <li v-for="membre in $store.state.liste_membre" class="columns membre">
+                        <div class="column infos">
+                            {{membre.fullname}} {{membre.email}}
+                        </div>
+                        <div class="column utils">
+                            <button class="button see" @click="showModal(membre)">voir</button>
+                            <button v-if="$store.state.member_id !== membre.id" class="button is-danger is-outlined" @click="delete_member(membre.id)">
+                                <span class="icon is-small">
+                                <i class="fas fa-times"></i>
+                                </span>
+                            </button>
+                             <button v-else disabled class="button is-danger is-outlined" @click="delete_member(membre.id)">
+                                <span class="icon is-small">
+                                <i class="fas fa-times"></i>
+                                </span>
+                            </button>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="column">
+                <Membre v-bind:membre="membrePick"/>
+            </div>
         </div>
-        <Membre v-bind:membre="membrePick" v-show="isModalVisible"
-                @close="closeModal"/>
-
     </div>
 </template>
 
@@ -25,29 +40,26 @@
 
         data() {
             return {
-                isModalVisible: false,
                 membrePick: {},
             };
         },
 
         methods: {
             delete_member(id) {
-                console.log(this.$store.state.email);
                 if (confirm("Voulez vous supprimer " + id + " ?")) {
-                    axios.delete('members/' + id + '?token=' + this.$store.state.token).then((response) => {
+                    axios.delete('members/' + id).then((response) => {
                         axios.get('members').then((response) => {
-                            this.$store.commit('setMembres', response.data);
+                            this.$store.commit('getListeMembre', response.data);
                         });
                     });
                 }
             },
 
             showModal(membre) {
-                console.log(membre);
                 this.membrePick = membre;
-                this.isModalVisible = true;
-                console.log(this.membrePick);
-            },
+                this.$store.commit("refreshTrue");
+         
+                     },
 
             closeModal() {
                 this.isModalVisible = false;
@@ -67,3 +79,18 @@
         }
     }
 </script>
+
+<style>
+
+.see{
+    margin-right: 10px;
+}
+
+.infos{
+    text-align: left;
+    margin-left: 5%;
+}
+
+
+
+</style>

@@ -17,7 +17,8 @@ export default new Vuex.Store({
         member_id: "",
         member_name: "",
         conversation_id: '',
-        liste_membre: []
+        liste_membre: [],
+        refresh: false
     },
     mutations: {
         connected(state, token) {
@@ -37,6 +38,14 @@ export default new Vuex.Store({
 
         getListeMembre(state, tab){
             state.liste_membre = tab
+        },
+
+        refreshTrue(state){
+            state.refresh = true
+        },
+
+        refreshFalse(state){
+            state.refresh = false
         }
 
 
