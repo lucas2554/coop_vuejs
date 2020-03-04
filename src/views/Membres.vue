@@ -15,7 +15,7 @@
                                 <i class="fas fa-times"></i>
                                 </span>
                             </button>
-                             <button v-else disabled class="button is-danger is-outlined" @click="delete_member(membre.id)">
+                             <button v-else disabled class="button is-danger is-outlined">
                                 <span class="icon is-small">
                                 <i class="fas fa-times"></i>
                                 </span>
