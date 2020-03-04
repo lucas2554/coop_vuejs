@@ -121,7 +121,6 @@
                 this.$router.push('/')
             }
 
-            // console.table(this.$store.state.liste_membre)
 
         },
 

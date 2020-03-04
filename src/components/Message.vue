@@ -1,16 +1,18 @@
 <template>
-    <article class="message">
+    <article class="message" v-bind:class="{'is-info': isMyMessage}">
         <div class="message-header">
-            <p>{{getMembre(item.member_id)}}</p>
+            <p ref="name">{{getMembre(item.member_id)}}</p>
             <p>{{item.created_at}}</p>
             <button v-if="item.member_id === member_id_stored" @click="deleteMessage(item.id)"
                     class="delete" aria-label="delete"></button>
             <i v-if="item.member_id === member_id_stored" class="fas fa-pen" @click="activerEditMessage"></i>
         </div>
         <div class="message-body">
-            <input ref="editer" class="edit-input" v-if="activated === true" @keyup.esc="anulerEditMessage" @keyup.enter="editMessage(item.message, item.id)" type="text"
-                v-model="item.message" v-on:blur="anulerEditMessage">
-                   <button v-if="activated === true" @click="editMessage(item.message, item.id)"><i class="fas fa-check"></i></button>
+            <input ref="editer" class="edit-input" v-if="activated === true" @keyup.esc="anulerEditMessage"
+                   @keyup.enter="editMessage(item.message, item.id)" type="text"
+                   v-model="item.message" v-on:blur="anulerEditMessage">
+            <button v-if="activated === true" @click="editMessage(item.message, item.id)"><i class="fas fa-check"></i>
+            </button>
             <p v-else>{{item.message}}</p>
         </div>
     </article>
@@ -23,6 +25,7 @@
             return {
                 member_id_stored: this.$store.state.member_id,
                 activated: false,
+                isMyMessage: false
             }
         },
         props: ['item'],
@@ -47,7 +50,6 @@
                 setTimeout(() => {
                     this.$refs.editer.focus()
                 }, 0)
-                // messageElement.children[0].focus();
             },
 
             anulerEditMessage() {
@@ -57,9 +59,9 @@
 
             editMessage(newMessage, idMessage) {
                 let param = {
-                    message : newMessage 
+                    message: newMessage
                 }
-                axios.put('channels/'+this.channel_id+'/posts/'+idMessage, param).then((response)=>{
+                axios.put('channels/' + this.channel_id + '/posts/' + idMessage, param).then((response) => {
                     this.activated = false;
                     this.$bus.$emit('charger-channel');
                     console.log(response.status)
@@ -72,6 +74,9 @@
 
 
         mounted() {
+            // alert(this.$store.state.member_name)
+            this.isMyMessage = this.$store.state.member_name === this.$refs.name.innerHTML
+            this.$bus.$emit('charger-channel');
 
 
         }
@@ -140,9 +145,9 @@
         cursor: pointer;
     }
 
-    button{
+    button {
         border: none;
-        background-color :none;
+        background-color: none;
         cursor: pointer;
     }
 </style>

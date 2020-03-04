@@ -54,10 +54,14 @@
 
                             <p class="title is-4">veuillez renseigner les champs suivant : </p>
                             <div class="content">
-                                <input @keyup.enter="editChannel" class="input" type="text" placeholder="label" v-model="label">
+                                <input @keyup.enter="editChannel" class="input" type="text" placeholder="label"
+                                       v-model="label">
 
-                                <textarea @keyup.enter="editChannel" class="textarea" placeholder="topic" v-model="topic"></textarea>
-                                <button @click="editChannel"  @keyup.enter="editChannel" class="button is-dark">Modifier La conversation</button>
+                                <textarea @keyup.enter="editChannel" class="textarea" placeholder="topic"
+                                          v-model="topic"></textarea>
+                                <button @click="editChannel" @keyup.enter="editChannel" class="button is-dark">Modifier
+                                    La conversation
+                                </button>
 
                             </div>
                         </div>
@@ -99,7 +103,7 @@
                 // this.channel_id = this.$route.params.id
                 this.loadEditedChannel(this.$route.params.id)
 
-                console.log('channel id :' + this.$route.params.id)
+                // console.log('channel id :' + this.$route.params.id)
             },
         },
         methods: {
@@ -111,6 +115,8 @@
                     case "add":
                         if (state === 'open') {
                             modalAdd.classList.add('is-active')
+                            // this.topic = ''
+                            // this.label = ''
 
                         } else if (state === 'close') {
                             modalAdd.classList.remove('is-active')
@@ -127,6 +133,7 @@
                         break;
                     case "":
                         modalEdit.classList.remove('is-active')
+                        modalAdd.classList.remove('is-active')
                         break
 
 
@@ -134,11 +141,13 @@
             },
 
             loadEditedChannel(id_channel) {
-                axios.get('channels/' + id_channel).then((response) => {
-                    // console.table(response.data)
-                    this.topic = response.data.topic
-                    this.label = response.data.label
-                })
+                if (id_channel !== '') {
+                    axios.get('channels/' + id_channel).then((response) => {
+                        // console.table(response.data)
+                        this.topic = response.data.topic
+                        this.label = response.data.label
+                    })
+                }
             },
 
             loadListChannel() {
@@ -196,6 +205,8 @@
                 }
                 axios.delete('channels/' + id).then((response) => {
                     this.loadListChannel()
+                    this.$bus.$emit('charger-channel');
+
 
                 })
 
@@ -228,7 +239,7 @@
         margin-bottom: 20px;
     }
 
-    .fas.fa-trash, .fas.fa-pen,.fas.fa-plus-circle {
+    .fas.fa-trash, .fas.fa-pen, .fas.fa-plus-circle {
         cursor: pointer;
     }
 
@@ -236,7 +247,7 @@
         padding-left: 15px;
     }
 
-    .fa-plus-circle{
+    .fa-plus-circle {
         color: hsl(217, 71%, 53%);
     }
 </style>

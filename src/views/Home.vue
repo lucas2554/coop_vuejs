@@ -18,6 +18,8 @@
         },
         mounted() {
             // console.log('home ' + this.$store.state.online);
+            // console.log(this.$store.state.member_name)
+
 
 
         }
