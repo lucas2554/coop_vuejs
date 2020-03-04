@@ -16,7 +16,7 @@
                 </div>
 
                 <div class="control has-icons-right">
-                    <input v-model="log.secondPassword" class="input is-primary" type="password"
+                    <input v-if="log.password !== ''" v-model="log.secondPassword" class="input is-primary" type="password"
                            placeholder="Vérifiez votre mot de passe" v-on="checkPswd()">
                     <span v-if="isPswVerifiedTwice === true" class="icon is-small is-right">
                         <i class="fas fa-check"></i>

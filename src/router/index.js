@@ -14,7 +14,7 @@ const routes = [
     {
         path: '/',
         name: 'home',
-        component: Home,
+        component: Conversations,
         beforeEnter(to, from, next) {
             if (store.state.token === "") {
                 router.push('/login')
@@ -76,6 +76,18 @@ const routes = [
     {
         path: '/conversations/:id',
         name: 'conversation',
+        component: Conversations,
+        beforeEnter(to, from, next) {
+            if (store.state.token === "") {
+                router.push('/login')
+            } else {
+                next()
+            }
+        }
+    },
+    {
+        path: '/editconversation/:id',
+        name: 'editConversation',
         component: Conversations,
         beforeEnter(to, from, next) {
             if (store.state.token === "") {

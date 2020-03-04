@@ -9,7 +9,6 @@
         <div id="navbarBasicExample" class="navbar-menu">
             <div class="navbar-start">
                 <router-link class="navbar-item" to="/">Co'op</router-link>
-                <router-link class="navbar-item" to="/conversations">Conversation</router-link>
                 <router-link class="navbar-item" to="/membres">Membres</router-link>
 
             </div>

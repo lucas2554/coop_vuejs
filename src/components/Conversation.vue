@@ -76,44 +76,22 @@
 
             },
 
-            deleteMessage(id) {
-
-                confirm('Attention vous allez supprimer un message.')
-                if (window.confirm) {
-                    axios.delete('channels/' + this.channel_id + "/posts/" + id).then((response) => {
-                        // console.log(response.status)
-                        this.chargerChannel()
-                    })
-                }
-
-            },
 
 
-            activerEditMessage() {
-                this.activated = true;
-            },
-
-            anulerEditMessage() {
-                this.activated = false;
-            },
-
-
-            editMessage(newMessage) {
-
-            }
 
 
         },
 
 
         mounted() {
-            this.$bus.$on('charger-channel', ()=>{
+            this.$bus.$on('charger-channel', () => {
                 this.chargerChannel()
             })
 
+            if (this.channel_id !== "") {
+                this.chargerChannel()
+            }
 
-            // alert(this.$route.params.id)
-            // console.log('params : '+this.$route.params.id)
 
         }
     }
@@ -122,63 +100,64 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 
-.convesation{
-    height: 80vh;
-    h3 {
-        margin: 40px 0 0;
-    }
+    .convesation {
+        height: 80vh;
 
-    ul {
-        list-style-type: none;
-        padding: 0;
-    }
-
-    li {
-        display: inline-block;
-        margin: 0 10px;
-    }
-
-    a {
-        color: #42b983;
-    }
-
-    .message_conversation {
-       
-      
-        overflow: auto;
-        border: #42b983 2px solid;
-
-        &::-webkit-scrollbar {
-            display: none;
+        h3 {
+            margin: 40px 0 0;
         }
 
-        padding: 15px;
-        border-radius: 15px;
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
 
-        .message {
-            width: 65%;
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
+        li {
+            display: inline-block;
+            margin: 0 10px;
+        }
+
+        a {
+            color: #42b983;
+        }
+
+        .message_conversation {
+
+
+            overflow: auto;
+            border: #42b983 2px solid;
+
+            &::-webkit-scrollbar {
+                display: none;
+            }
+
+            padding: 15px;
+            border-radius: 15px;
+
+            .message {
+                width: 65%;
+                display: block;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+
+        }
+
+        .scroll {
+            height: auto;
+            overflow: hidden;
+
         }
 
 
+        form {
+            position: absolute;
+            bottom: 0;
+        }
+
+        .fa-pen {
+            cursor: pointer;
+        }
     }
-
-    .scroll {
-        height: auto;
-        overflow: hidden;
-
-    }
-
-
-    form {
-        position: absolute;
-        bottom: 0;
-    }
-
-    .fa-pen {
-        cursor: pointer;
-    }
-}
 </style>
