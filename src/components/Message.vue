@@ -1,7 +1,7 @@
 <template>
     <article class="message" v-bind:class="{'is-info': isMyMessage}">
         <div class="message-header">
-            <p ref="name">{{getMembre(item.member_id)}}</p>
+            <p @click="toMemberInfo(item.member_id)" ref="name">{{getMembre(item.member_id)}}</p>
             <p>{{item.created_at}}</p>
             <button v-if="item.member_id === member_id_stored" @click="deleteMessage(item.id)"
                     class="delete" aria-label="delete"></button>
@@ -67,6 +67,10 @@
                     console.log(response.status)
                 })
 
+            },
+            toMemberInfo(id) {
+                this.$bus.$emit('go-to-member', id)
+                this.$router.push('/membres')
             }
 
 
@@ -74,6 +78,8 @@
 
 
         mounted() {
+
+            // alert(this.item.member_id)
 
 
             this.isMyMessage = this.$store.state.member_name === this.$refs.name.innerHTML

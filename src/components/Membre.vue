@@ -39,10 +39,10 @@
 
         watch: {
             check: function () {
-                if(this.$store.state.refresh == true){
+                if(this.$store.state.refresh === true){
                     this.memberMessages = [];
                     this.messages.forEach(element => {    
-                          if (element.member_id == this.membre.id) {
+                          if (element.member_id === this.membre.id) {
                               this.memberMessages.push(element);
                           }
                     })

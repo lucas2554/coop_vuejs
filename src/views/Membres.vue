@@ -10,12 +10,13 @@
                         </div>
                         <div class="column utils">
                             <button class="button see" @click="showModal(membre)">voir</button>
-                            <button v-if="$store.state.member_id !== membre.id" class="button is-danger is-outlined" @click="delete_member(membre.id)">
+                            <button v-if="$store.state.member_id !== membre.id" class="button is-danger is-outlined"
+                                    @click="delete_member(membre.id)">
                                 <span class="icon is-small">
                                 <i class="fas fa-times"></i>
                                 </span>
                             </button>
-                             <button v-else disabled class="button is-danger is-outlined">
+                            <button v-else disabled class="button is-danger is-outlined">
                                 <span class="icon is-small">
                                 <i class="fas fa-times"></i>
                                 </span>
@@ -58,39 +59,33 @@
             showModal(membre) {
                 this.membrePick = membre;
                 this.$store.commit("refreshTrue");
-         
-                     },
+
+            },
 
             closeModal() {
                 this.isModalVisible = false;
             },
 
-            view_member(id) {
-                this.$store.state.membres.forEach(element => {
-                    if (element.id === id) {
-                        //console.log(element);
-                        //this.showModal(Membre);
-                    }
-                })
-                //alert("mm" + id);
-
-
-            }
+        },
+        mounted() {
+            this.$bus.$on('go-to-member', (member_id) => {
+                this.membrePick = this.getFullMembre(member_id);
+                this.$store.commit("refreshTrue");
+            })
         }
     }
 </script>
 
 <style>
 
-.see{
-    margin-right: 10px;
-}
+    .see {
+        margin-right: 10px;
+    }
 
-.infos{
-    text-align: left;
-    margin-left: 5%;
-}
-
+    .infos {
+        text-align: left;
+        margin-left: 5%;
+    }
 
 
 </style>
