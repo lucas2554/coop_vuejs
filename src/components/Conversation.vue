@@ -6,8 +6,7 @@
             </div>
         </div>
 
-
-        <form action="">
+        <form v-if="this.$route.params.id !==''" action="">
             <input type="text" placeholder="poster un message" v-model="message">
             <button @click="postMessage">valider</button>
         </form>
@@ -30,7 +29,7 @@
         data() {
             return {
                 channel_id: '',
-                conv: {},
+                conv: [],
                 message: '',
                 memberName: '',
                 member_id_stored: this.$store.state.member_id,
@@ -42,6 +41,7 @@
             $route() {
                 this.channel_id = this.$route.params.id
                 this.chargerChannel()
+
             },
 
 
@@ -57,7 +57,7 @@
                     // console.log(response.status)
                     Array.prototype.reverse.call(this.conv)
                     this.conv = response.data
-                    console.table(this.conv)
+                    // console.table(this.conv)
                 })
             },
 
@@ -69,15 +69,24 @@
                 }
 
                 axios.post('channels/' + this.channel_id + "/posts", param).then((response) => {
-                    console.log(response.data)
+                    // console.log(response.data)
                     this.chargerChannel()
                 })
 
 
             },
 
+            getInfosChannel() {
+
+                this.conv.forEach(function (item) {
+                    axios.get('channels/' + item.channel_id).then((response) => {
+                        console.table(response.data)
+
+                    })
+                })
 
 
+            }
 
 
         },

@@ -47,6 +47,8 @@
                         console.log(response.status)
                         alert('déconnecté');
                         this.$store.commit('connected', '')
+                        this.$store.commit('getMemberName', '')
+                        this.$store.commit('getMemberID', '')
                         this.$router.push('/login')
 
                     }
@@ -58,7 +60,7 @@
 </script>
 
 <style>
-    nav{
+    nav {
         z-index: -1;
     }
 </style>
