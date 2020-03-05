@@ -74,7 +74,8 @@
 
 
         mounted() {
-            // alert(this.$store.state.member_name)
+
+
             this.isMyMessage = this.$store.state.member_name === this.$refs.name.innerHTML
             this.$bus.$emit('charger-channel');
 

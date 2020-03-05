@@ -34,10 +34,8 @@
                                 conversation </p>
                             <div class="content">
                                 <input class="input" type="text" placeholder="label" v-model="label">
-
                                 <textarea class="textarea" placeholder="topic" v-model="topic"></textarea>
                                 <button @click="createChannel" class="button is-dark">Valider</button>
-
                             </div>
                         </div>
                     </div>

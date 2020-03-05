@@ -6,7 +6,7 @@
             </div>
         </div>
 
-        <form action="">
+        <form v-if="this.$route.params.id !==''" action="">
             <input type="text" placeholder="poster un message" v-model="message">
             <button @click="postMessage">valider</button>
         </form>
