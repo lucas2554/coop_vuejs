@@ -39,8 +39,11 @@
         },
         watch: {
             $route() {
-                this.channel_id = this.$route.params.id
-                this.chargerChannel()
+                if (this.$route.params.id) {
+                    this.channel_id = this.$route.params.id
+                    this.chargerChannel()
+                }
+
 
             },
 
@@ -97,9 +100,7 @@
                 this.chargerChannel()
             })
 
-            if (this.channel_id !== "") {
-                this.chargerChannel()
-            }
+            this.chargerChannel()
 
 
         }
