@@ -1,7 +1,7 @@
 <template>
     <article class="message" v-bind:class="{'is-info': isMyMessage}">
         <div class="message-header">
-            <p @click="toMemberInfo(item.member_id)" ref="name">{{getMembre(item.member_id)}}</p>
+            <p @click="toMemberInfo(item.member_id)" v-on="colorMyMessage(item.member_id)" ref="name">{{getMembre(item.member_id)}}</p>
             <p>{{item.created_at}}</p>
             <button v-if="item.member_id === member_id_stored" @click="deleteMessage(item.id)"
                     class="delete" aria-label="delete"></button>
@@ -71,6 +71,10 @@
             toMemberInfo(id) {
                 this.$bus.$emit('go-to-member', id)
                 this.$router.push('/membres')
+            },
+
+            colorMyMessage(id){
+                this.isMyMessage = id ===this.$store.state.member_id
             }
 
 
@@ -80,9 +84,9 @@
         mounted() {
 
 
-            console.log(this.$refs.name.innerHTML.trim())
-            console.log(this.getMembre(this.item.member_id))
-            this.isMyMessage = this.$refs.name.innerHTML.trim() === this.getMembre(this.item.member_id)
+            // console.log(this.$refs.name.innerHTML.trim())
+            console.log(this.getMembre(this.item.member_id) === this.$refs.name.innerHTML.trim() === this.$store.state.member_name)
+            // this.isMyMessage = this.$refs.name.innerHTML.trim() === this.$store.state.member_name.trim()
             this.$bus.$emit('charger-channel');
 
 
