@@ -19,7 +19,8 @@ export default new Vuex.Store({
         member: {},
         conversation_id: '',
         liste_membre: [],
-        refresh: false
+        refresh: false,
+        messageUser: []
     },
     mutations: {
         connected(state, token) {
@@ -51,6 +52,14 @@ export default new Vuex.Store({
 
         getMember(state, member) {
             state.member = member
+        },
+
+        getUserMessage(state, messages) {
+            state.messageUser.push(messages)
+
+        },
+        emptyUserMessage(state){
+            state.messageUser =[]
         }
 
 

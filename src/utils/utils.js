@@ -50,33 +50,34 @@ export const outils = {
         },
 
         getMemberMessages(id) {
+            this.$store.commit('getUserMessage', null)
             //récupère les id des conversations dont le membre a publié un message
             let idMember = id;
             let idConversations = [];
-            let messages = [];
             let memberMessages = [];
             axios.get('channels').then((response) => {
-                response.data.forEach(element =>
+                response.data.forEach((element) => {
+                    idConversations.push(element.id)
+                });
+                idConversations.forEach((idConv) => {
+                    axios.get('channels/' + idConv + '/posts').then((response) => {
 
+                        response.data.forEach((mess) => {
 
-
-                    idConversations.push(element.id));
-                // récupère tous les messages des conversations concernées
-                idConversations.forEach(element =>
-                    axios.get('channels/' + element + '/posts').then((response) => {
-                        response.data.forEach(element => {
-                            if (element.member_id === idMember) {
-                                //console.log(element.member_id)
-                                //messages.push(element)
+                            if (mess.member_id === idMember) {
+                                memberMessages.push(mess)
                             }
+
                         })
+
                     })
-                );
+                })
+
 
             });
-            console.log(messages);
-            console.log(messages.length);
-            // this.test(messages, idMember);
+
+            this.$store.commit('getUserMessage', memberMessages)
+
         },
 
         test(messages, id) {

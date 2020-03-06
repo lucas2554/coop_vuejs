@@ -26,7 +26,7 @@
                 </ul>
             </div>
             <div class="column">
-                <Membre v-bind:membre="this.$store.state.member"/>
+                <Membre/>
             </div>
         </div>
     </div>
@@ -42,7 +42,6 @@
         data() {
             return {
                 membrePick: {},
-                // memberMessage: []
             };
         },
 
@@ -65,13 +64,12 @@
 
             showModal(membre) {
                 this.$store.commit('getMember', membre);
+                //vide a chaque fois le tableau de massage dans le store
+                this.$store.commit('emptyUserMessage')
+
                 this.getMemberMessages(membre.id);
-                // this.memberMessage = this.getMemberMessages(membre.id)
-                //this.$store.commit("refreshTrue");
 
             },
-
-
 
 
             closeModal() {
@@ -83,6 +81,8 @@
             this.$bus.$on('go-to-member', (member_id) => {
                 this.showModal(this.getFullMembre(member_id))
             })
+
+
         }
     }
 </script>

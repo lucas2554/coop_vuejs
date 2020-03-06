@@ -36,7 +36,7 @@
                 message: '',
                 memberName: '',
                 member_id_stored: this.$store.state.member_id,
-                test: [],
+                // test: [],
                 activated: false,
                 writeMessageActivated: false
             }
