@@ -79,10 +79,10 @@
 
         mounted() {
 
-            // alert(this.item.member_id)
 
-
-            this.isMyMessage = this.$store.state.member_name === this.$refs.name.innerHTML
+            console.log(this.$refs.name.innerHTML.trim())
+            console.log(this.getMembre(this.item.member_id))
+            this.isMyMessage = this.$refs.name.innerHTML.trim() === this.getMembre(this.item.member_id)
             this.$bus.$emit('charger-channel');
 
 

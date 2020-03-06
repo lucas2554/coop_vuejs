@@ -29,7 +29,8 @@
 
             </div>
 
-            <button v-if="isPswVerified === true && isMailVerified === true" @click="login"
+            <button ref="button" v-if="isPswVerified === true && isMailVerified === true" @keyup:enter="login"
+                    @click="login"
                     class="button is-primary is-rounded">Connexion
             </button>
             <p v-else class="is-medium is-4">Remplissez les différents champs afin de vous connecter</p>
@@ -76,7 +77,9 @@
             },
 
 
-            login() {
+            login(e) {
+
+                e.preventDefault()
 
                 if (this.log.email && this.log.password) {
                     let parametre = {
@@ -85,13 +88,14 @@
                     };
                     axios.post('members/signin', parametre).then((response) => {
                         console.table(response.data);
-                        // console.log("tok :" + response.data.token);
+                        console.log(response.status);
                         if (response.status === 200) {
+
                             let token = response.data.token;
                             let member_id = response.data.member
                             this.$store.commit('connected', token);
-                            this.$store.commit('getMemberID', member_id.id);
-                            this.$store.commit('getMemberName', member_id.fullname);
+                            this.$store.commit('getMemberID', member_id.id.trim());
+                            this.$store.commit('getMemberName', member_id.fullname.trim());
                             this.$router.push('/');
                         } else {
 

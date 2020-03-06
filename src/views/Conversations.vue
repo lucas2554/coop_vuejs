@@ -200,13 +200,14 @@
 
                 confirm('Attention vous allez supprimer une conversation.')
                 if (window.confirm()) {
+
+                    axios.delete('channels/' + id).then((response) => {
+                        this.loadListChannel()
+                        this.$bus.$emit('charger-channel');
+
+
+                    })
                 }
-                axios.delete('channels/' + id).then((response) => {
-                    this.loadListChannel()
-                    this.$bus.$emit('charger-channel');
-
-
-                })
 
 
             }
