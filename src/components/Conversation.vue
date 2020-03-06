@@ -1,18 +1,21 @@
 <template>
-    <div class="conversation column">
-        <div class="message_conversation">
-            <div class="scroll" v-for="item in conv">
-                <Message :item="item"/>
+    <div class="column">
+        <div class="conversation column is-three-quarters">
+            <div class="message_conversation">
+                <div class="scroll" v-for="item in conv">
+                    <Message :item="item"/>
+                </div>
             </div>
+
+
         </div>
-
-        <form v-if="this.$route.params.id !==''" action="">
-            <input type="text" placeholder="poster un message" v-model="message">
-            <button @click="postMessage">valider</button>
-        </form>
-
+        <div class="container">
+            <form v-if="writeMessageActivated === true" class="column" action="">
+                <input class="input is-rounded" type="text" placeholder="poster un message" v-model="message">
+                <button @click="postMessage">valider</button>
+            </form>
+        </div>
     </div>
-
 </template>
 
 <script>
@@ -34,7 +37,8 @@
                 memberName: '',
                 member_id_stored: this.$store.state.member_id,
                 test: [],
-                activated: false
+                activated: false,
+                writeMessageActivated: false
             }
         },
         watch: {
@@ -42,6 +46,10 @@
                 if (this.$route.params.id) {
                     this.channel_id = this.$route.params.id
                     this.chargerChannel()
+                    this.writeMessageActivated = true
+                } else {
+                    this.writeMessageActivated = false
+
                 }
 
 
@@ -102,6 +110,7 @@
 
             this.chargerChannel()
 
+            console.log(this.writeMessageActivated)
 
         }
     }

@@ -49,6 +49,48 @@ export const outils = {
 
         },
 
+        getMemberMessages(id) {
+            //récupère les id des conversations dont le membre a publié un message
+            let idMember = id;
+            let idConversations = [];
+            let messages = [];
+            let memberMessages = [];
+            axios.get('channels').then((response) => {
+                response.data.forEach(element =>
+
+
+
+                    idConversations.push(element.id));
+                // récupère tous les messages des conversations concernées
+                idConversations.forEach(element =>
+                    axios.get('channels/' + element + '/posts').then((response) => {
+                        response.data.forEach(element => {
+                            if (element.member_id === idMember) {
+                                //console.log(element.member_id)
+                                //messages.push(element)
+                            }
+                        })
+                    })
+                );
+
+            });
+            console.log(messages);
+            console.log(messages.length);
+            // this.test(messages, idMember);
+        },
+
+        test(messages, id) {
+            // console.log(id);
+            console.log(messages.length);
+
+        },
+
+        sortDate(a, b) {
+            let da = new Date(a.created_at);
+            let db = new Date(b.created_at);
+            return (da < db) ? 1 : -1;
+        }
+
 
     }
 

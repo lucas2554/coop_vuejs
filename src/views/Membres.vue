@@ -26,7 +26,7 @@
                 </ul>
             </div>
             <div class="column">
-                <Membre v-bind:membre="membrePick"/>
+                <Membre v-bind:membre="this.$store.state.member"/>
             </div>
         </div>
     </div>
@@ -42,7 +42,14 @@
         data() {
             return {
                 membrePick: {},
+                // memberMessage: []
             };
+        },
+
+        watch: {
+            membrePick: function (val) {
+                console.log('ok')
+            }
         },
 
         methods: {
@@ -57,10 +64,15 @@
             },
 
             showModal(membre) {
-                this.membrePick = membre;
-                this.$store.commit("refreshTrue");
+                this.$store.commit('getMember', membre);
+                this.getMemberMessages(membre.id);
+                // this.memberMessage = this.getMemberMessages(membre.id)
+                //this.$store.commit("refreshTrue");
 
             },
+
+
+
 
             closeModal() {
                 this.isModalVisible = false;
@@ -69,8 +81,7 @@
         },
         mounted() {
             this.$bus.$on('go-to-member', (member_id) => {
-                this.membrePick = this.getFullMembre(member_id);
-                this.$store.commit("refreshTrue");
+                this.showModal(this.getFullMembre(member_id))
             })
         }
     }

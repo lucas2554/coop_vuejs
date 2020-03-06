@@ -1,16 +1,16 @@
 <template>
     <div class="detail">
-            <div class="infos">
-                <p>nom : {{membre.fullname}}</p>
-                <p>e-mail : {{membre.email}}</p>
+        <div class="infos">
+            <p>nom : {{membre.fullname}}</p>
+            <p>e-mail : {{membre.email}}</p>
         </div>
-         <div v-if="memberMessages.length != 0" class="column">
-                <ul>
-                    <li v-for="message in memberMessages" class="columns membre">
-                            <p>{{message.message}}</p>
-                            <p>{{message.created_at}}</p>
-                    </li>
-                </ul>
+        <div v-if="memberMessages.length !== 0" class="column">
+            <ul>
+                <li v-for="message in memberMessages" class="columns membre">
+                    <p>{{message.message}}</p>
+                    <p>{{message.created_at}}</p>
+                </li>
+            </ul>
         </div>
         <div v-else>
             <p>aucun message</p>
@@ -23,64 +23,65 @@
         name: 'Membre',
         props: ['membre'],
 
-          data() {
+        data() {
             return {
-             idConversations:[],
-            messages:[],
-            memberMessages:[]
+                idConversations: [],
+                messages: [],
+                memberMessages: []
             }
         },
 
-        computed:{
-            check(){
+
+        computed: {
+            check() {
                 return this.$store.state.refresh
             }
         },
 
         watch: {
             check: function () {
-                if(this.$store.state.refresh === true){
+                if (this.$store.state.refresh === true) {
                     this.memberMessages = [];
-                    this.messages.forEach(element => {    
-                          if (element.member_id === this.membre.id) {
-                              this.memberMessages.push(element);
-                          }
+                    this.messages.forEach(element => {
+                        if (element.member_id === this.membre.id) {
+                            this.memberMessages.push(element);
+                        }
                     })
-                 this.memberMessages.sort(function(a, b) {
-                    let da =new Date(a.created_at);
-                    let db =new Date(b.created_at);
-                    return (da < db) ? 1:-1;
-                });
-                this.memberMessages = this.memberMessages.slice(0, 10);
-                this.$store.commit("refreshFalse");
+                    this.memberMessages.sort(function (a, b) {
+                        let da = new Date(a.created_at);
+                        let db = new Date(b.created_at);
+                        return (da < db) ? 1 : -1;
+                    });
+                    this.memberMessages = this.memberMessages.slice(0, 10);
+                    this.$store.commit("refreshFalse");
                 }
             }
         },
 
         methods: {
-        
-            loadConversations(){
+
+            loadConversations() {
                 axios.get('channels').then((response) => {
                     response.data.forEach(element => this.idConversations.push(element.id));
                     this.loadMessages();
                 })
             },
 
-            loadMessages(){
-                this.idConversations.forEach(element => 
+            loadMessages() {
+                this.idConversations.forEach(element =>
                     axios.get('channels/' + element + '/posts').then((response) => {
-                        response.data.forEach(element =>     
-                          this.messages.push(element)
+                        response.data.forEach(element =>
+                            this.messages.push(element)
                         )
                     })
                 );
 
             },
 
-            sortDate(a,b){ 
+            sortDate(a, b) {
                 let da = new Date(a.created_at);
-                let db=  new Date(b.created_at);
-                return (da < db) ? 1:-1;
+                let db = new Date(b.created_at);
+                return (da < db) ? 1 : -1;
             }
 
             // loadMessages(){
@@ -107,5 +108,5 @@
 
 <style scoped lang="scss">
 
-   
+
 </style>

@@ -82,14 +82,7 @@
 
 
         mounted() {
-
-
-            // console.log(this.$refs.name.innerHTML.trim())
-            console.log(this.getMembre(this.item.member_id) === this.$refs.name.innerHTML.trim() === this.$store.state.member_name)
-            // this.isMyMessage = this.$refs.name.innerHTML.trim() === this.$store.state.member_name.trim()
             this.$bus.$emit('charger-channel');
-
-
         }
     }
 </script>
