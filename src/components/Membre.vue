@@ -9,7 +9,9 @@
         <div v-if="messages.length !== 0" class="column">
             <ul>
                 <li v-for="message in messages[1]" class="columns membre">
-                    <p>{{message.message}}</p>
+                    <router-link :to="{name:'conversation', params:{id:message.channel_id}}">
+                        <p>{{message.message}}</p>
+                    </router-link>
                     <p>------------</p>
                     <p>{{message.created_at}}</p>
                 </li>
@@ -71,6 +73,12 @@
             },
 
             getMessage(newValue, oldValue) {
+                // sortDate(a, b) {
+                //     let da = new Date(a.created_at);
+                //     let db = new Date(b.created_at);
+                //     return (da < db) ? 1 : -1;
+                // }
+                //         this.memberMessages = this.memberMessages.slice(0, 10);
                 this.messages = newValue
             }
         },

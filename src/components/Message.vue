@@ -1,7 +1,7 @@
 <template>
     <article class="message" v-bind:class="{'is-info': isMyMessage}">
         <div class="message-header">
-            <p @click="toMemberInfo(item.member_id)" v-on="colorMyMessage(item.member_id)" ref="name">{{getMembre(item.member_id)}}</p>
+            <p @click="toMemberInfo(item.member_id)" v-on="colorMyMessage(item.member_id)" ref="name" class="member-link">{{getMembre(item.member_id)}}</p>
             <p>{{item.created_at}}</p>
             <button v-if="item.member_id === member_id_stored" @click="deleteMessage(item.id)"
                     class="delete" aria-label="delete"></button>
@@ -152,6 +152,11 @@
     button {
         border: none;
         background-color: none;
+        cursor: pointer;
+    }
+
+
+    .member-link{
         cursor: pointer;
     }
 </style>
